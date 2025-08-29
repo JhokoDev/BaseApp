@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.baseapp">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,12 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Adicione a outra atividade se necessário -->
-        <!--
         <activity
-            android:name=".AnotherActivity"
+            android:name=".UI.HomeActivity"
             android:exported="false" />
-        -->
+        <activity
+            android:name=".UI.SettingsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

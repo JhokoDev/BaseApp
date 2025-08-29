@@ -1,44 +1,23 @@
 package com.example.baseapp
 
-
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.example.baseapp.databinding.ActivityMainBinding
-
+import com.example.baseapp.UI.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var activityMainBinding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(activityMainBinding.root)
+        // Operações não ligadas a UI (ex: inicializar serviços, verificar permissões)
+        initServices()
 
-        // Configurar o NavController com o NavHostFragment
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        // Configurar BottomNavigationView com NavController
-        activityMainBinding.navigation.setupWithNavController(navController)
-        activityMainBinding.navigation.setOnNavigationItemReselectedListener {
-            // Ignorar reseleção para evitar recarregar o mesmo fragmento
-        }
-
-        // Botão opcional para abrir outra atividade (descomente se necessário)
-        /*
-        val openStatusButton = findViewById<Button>(R.id.btn_open_status)
-        openStatusButton.setOnClickListener {
-            val intent = Intent(this, AnotherActivity::class.java)
-            startActivity(intent)
-        }
-        */
+        // Lançar a tela inicial de UI (MenuActivity)
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish() // Finalizar MainActivity para não ficar na stack
     }
 
-    override fun onBackPressed() {
-        finish()
+    private fun initServices() {
+        // Adicione lógica não UI aqui, ex: inicializar Firebase, verificar atualizações, etc.
     }
 }

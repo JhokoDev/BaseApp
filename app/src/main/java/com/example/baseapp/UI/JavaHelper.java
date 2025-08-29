@@ -1,4 +1,4 @@
-package com.example.baseapp.Java;
+package com.example.baseapp.UI;
 
 public class JavaHelper {
     public String getMensagem() {

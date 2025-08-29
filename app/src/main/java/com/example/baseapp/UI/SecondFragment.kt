@@ -1,22 +1,22 @@
-package com.example.baseapp
+package com.example.baseapp.UI
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.baseapp.databinding.FragmentFirstBinding
+import com.example.baseapp.databinding.FragmentSecondBinding
 
-class FirstFragment : Fragment() {
+class SecondFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
     }
 
