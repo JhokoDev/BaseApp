@@ -11,4 +11,7 @@
     <string name="nav_header_subtitle">BaseApp Navigation</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home_content">Bem-vindo à Tela Inicial</string>
+    <string name="nav_item1">Item 1</string>
+    <string name="nav_item2">Item 2</string>
 </resources>

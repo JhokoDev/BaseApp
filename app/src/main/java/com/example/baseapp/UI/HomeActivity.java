@@ -1,15 +1,15 @@
 package com.example.baseapp.UI;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
+
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.fragment.NavHostFragment;
 import com.example.baseapp.R;
 import com.example.baseapp.utils.NavigationUtils;
 import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseUIActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,16 @@ public class HomeActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_drawer);
 
         // Configurar menu hamburger e barras
-        NavigationUtils.setupNavigationDrawer(this, toolbar, drawerLayout, navigationView, R.id.nav_graph);
+        NavigationUtils.setupNavigationDrawer(this, toolbar, drawerLayout, navigationView);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected void onFabClicked() {
+        Toast.makeText(this, "FAB clicado na HomeActivity", Toast.LENGTH_SHORT).show();
     }
 }
