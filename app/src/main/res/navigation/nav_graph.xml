@@ -2,15 +2,47 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/homeActivity">
+
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.example.baseapp.UI.HomeActivity"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_to_settings"
+            app:destination="@id/settingsActivity"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeActivity"
+            app:popUpToInclusive="true" />
+    </activity>
+
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.example.baseapp.UI.SettingsActivity"
+        android:label="@string/action_settings">
+        <action
+            android:id="@+id/action_to_home"
+            app:destination="@id/homeActivity"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/settingsActivity"
+            app:popUpToInclusive="true" />
+    </activity>
 
     <fragment
         android:id="@+id/firstFragment"
-        android:name="com.example.baseapp.FirstFragment"
-        android:label="First Fragment" />
+        android:name="com.example.baseapp.UI.FirstFragment"
+        android:label="First Fragment">
+        <action
+            android:id="@+id/action_to_second"
+            app:destination="@id/secondFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.example.baseapp.SecondFragment"
-        android:label="Second Fragment" />
+        android:name="com.example.baseapp.UI.SecondFragment"
+        android:label="Second Fragment">
+        <action
+            android:id="@+id/action_to_first"
+            app:destination="@id/firstFragment" />
+    </fragment>
 </navigation>

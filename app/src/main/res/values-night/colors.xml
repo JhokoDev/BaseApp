@@ -1,0 +1,6 @@
+<resources>
+    <color name="material_dynamic_primary80">#4C8BF5</color>
+    <color name="material_dynamic_neutral90">#424242</color>
+    <color name="material_dynamic_primary40">#A1C2FA</color>
+    <color name="nav_item_tint">@android:color/white</color>
+</resources>
