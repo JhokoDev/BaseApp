@@ -1,12 +1,11 @@
 package com.example.baseapp.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.baseapp.R;
@@ -15,41 +14,49 @@ import java.util.List;
 
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.SettingViewHolder> {
 
-    private List<SettingItem> settingItems;
-    private Context context;
-    private SharedPreferences prefs;
+    private final List<SettingItem> settingItems;
+    private final Context context;
+    private final OnSettingChangeListener listener;
 
-    public SettingsAdapter(Context context, List<SettingItem> settingItems) {
-        this.context = context;
-        this.settingItems = settingItems;
-        this.prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+    public interface OnSettingChangeListener {
+        void onSettingChanged(SettingItem item, boolean isChecked);
     }
 
+    public SettingsAdapter(Context context, List<SettingItem> settingItems, OnSettingChangeListener listener) {
+        this.context = context;
+        this.settingItems = settingItems;
+        this.listener = listener;
+    }
+
+    public List<SettingItem> getSettingItems() {
+        return settingItems;
+    }
+
+    @NonNull
     @Override
-    public SettingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SettingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_setting, parent, false);
         return new SettingViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SettingViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SettingViewHolder holder, int position) {
         SettingItem item = settingItems.get(position);
         holder.title.setText(item.getTitle());
         holder.description.setText(item.getDescription());
-
-        if (item.isToggle()) {
-            holder.switchCompat.setVisibility(View.VISIBLE);
-            holder.switchCompat.setChecked(item.getToggleValue());
-            holder.switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                item.setToggleValue(isChecked);
-                prefs.edit().putBoolean(item.getKey(), isChecked).apply();
-                Toast.makeText(context, item.getTitle() + ": " + (isChecked ? "Ativado" : "Desativado"), Toast.LENGTH_SHORT).show();
-            });
-        } else {
-            holder.switchCompat.setVisibility(View.GONE);
+        holder.switchCompat.setVisibility(item.isToggle() ? View.VISIBLE : View.GONE);
+        holder.switchCompat.setChecked(item.getToggleValue());
+        holder.switchCompat.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            item.setToggleValue(isChecked);
+            if (listener != null) {
+                listener.onSettingChanged(item, isChecked);
+            }
+        });
+        if (!item.isToggle()) {
             holder.itemView.setOnClickListener(v -> {
-                Toast.makeText(context, "Clicado em " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                // Adicione funcionalidade futura aqui
+                if (listener != null) {
+                    listener.onSettingChanged(item, false);
+                }
             });
         }
     }

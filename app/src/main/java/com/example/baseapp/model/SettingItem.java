@@ -3,9 +3,9 @@ package com.example.baseapp.model;
 public class SettingItem {
     private String title;
     private String description;
-    private String key; // Chave para SharedPreferences
-    private boolean isToggle; // true para switch, false para ação de clique
-    private boolean toggleValue; // Estado do switch (se for toggle)
+    private String key;
+    private boolean isToggle;
+    private boolean toggleValue;
 
     public SettingItem(String title, String description, String key, boolean isToggle, boolean toggleValue) {
         this.title = title;
