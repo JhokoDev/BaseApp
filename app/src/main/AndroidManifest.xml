@@ -3,6 +3,8 @@
     package="com.example.baseapp">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +26,9 @@
             android:exported="false" />
         <activity
             android:name=".UI.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ProfileActivity"
             android:exported="false" />
     </application>
 

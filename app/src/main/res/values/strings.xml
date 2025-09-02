@@ -18,4 +18,10 @@
     <string name="settings_notifications_desc">Ativar ou desativar notificações do aplicativo</string>
     <string name="settings_theme">Tema</string>
     <string name="settings_theme_desc">Escolher entre tema claro ou escuro</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="profile_name">Nome</string>
+    <string name="profile_email">E-mail</string>
+    <string name="profile_edit">Editar Perfil</string>
+    <string name="profile_logout">Sair</string>
+    <string name="profile_change_image">Alterar Imagem de Perfil</string>
 </resources>
