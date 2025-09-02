@@ -4,8 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.baseapp.R;
 import com.example.baseapp.adapter.ProfileAdapter;
 import com.example.baseapp.model.ProfileItem;
@@ -53,8 +53,11 @@ public class ProfileActivity extends BaseUIActivity {
         if (!imagePath.isEmpty()) {
             File imageFile = new File(imagePath);
             if (imageFile.exists()) {
-                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                profileImage.setImageBitmap(bitmap);
+                Glide.with(this)
+                        .load(imageFile)
+                        .transform(new CircleCrop())
+                        .error(R.drawable.ic_profile)
+                        .into(profileImage);
             }
         }
 
@@ -94,8 +97,11 @@ public class ProfileActivity extends BaseUIActivity {
                         // Copiar imagem para armazenamento interno
                         String newImagePath = saveImageToInternalStorage(imageUri);
                         if (newImagePath != null) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(newImagePath);
-                            profileImage.setImageBitmap(bitmap);
+                            Glide.with(this)
+                                    .load(new File(newImagePath))
+                                    .transform(new CircleCrop())
+                                    .error(R.drawable.ic_profile)
+                                    .into(profileImage);
                             prefs.edit().putString("profile_image_path", newImagePath).apply();
                             Toast.makeText(this, "Imagem de perfil atualizada", Toast.LENGTH_SHORT).show();
                         } else {
