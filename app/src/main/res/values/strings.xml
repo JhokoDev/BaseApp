@@ -23,4 +23,5 @@
     <string name="profile_email">E-mail</string>
     <string name="profile_edit">Editar Perfil</string>
     <string name="profile_logout">Sair</string>
+    <string name="profile_change_image">Alterar Imagem de Perfil</string>
 </resources>
