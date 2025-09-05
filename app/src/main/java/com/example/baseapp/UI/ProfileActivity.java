@@ -1,6 +1,5 @@
 package com.example.baseapp.UI;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,18 +8,21 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.baseapp.R;
 import com.example.baseapp.adapter.ProfileAdapter;
 import com.example.baseapp.model.ProfileItem;
 import com.example.baseapp.utils.PermissionUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class ProfileActivity extends BaseUIActivity {
         setupNavigation();
 
         // Configurar SharedPreferences
-        prefs = getSharedPreferences("AppPrefs", MODE_PRIVATE);
+        prefs = getSharedPreferences("BaseAppPrefs", MODE_PRIVATE);
 
         // Configurar ImageView
         profileImage = findViewById(R.id.profile_image);
@@ -83,7 +85,7 @@ public class ProfileActivity extends BaseUIActivity {
             } else if (getString(R.string.profile_edit).equals(item.getTitle())) {
                 showEditProfileDialog();
             } else if (getString(R.string.profile_logout).equals(item.getTitle())) {
-                showLogoutDialog();
+                performLogout();
             }
         });
         profileList.setAdapter(adapter);
@@ -115,9 +117,21 @@ public class ProfileActivity extends BaseUIActivity {
         });
     }
 
+    public void performLogout() {
+        SharedPreferences prefs = getSharedPreferences("BaseAppPrefs", MODE_PRIVATE);
+        prefs.edit()
+                .remove("google_id_token")
+                .remove("user_name")
+                .remove("user_email")
+                .remove("profile_image_path")
+                .apply();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_profile;
     }
 
     @Override
@@ -188,21 +202,6 @@ public class ProfileActivity extends BaseUIActivity {
             } else {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
             }
-        });
-        builder.setNegativeButton("Cancelar", null);
-        builder.show();
-    }
-
-    private void showLogoutDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.profile_logout));
-        builder.setMessage("Deseja sair do aplicativo?");
-        builder.setPositiveButton("Sair", (dialog, which) -> {
-            Toast.makeText(this, "Saindo do aplicativo", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
         });
         builder.setNegativeButton("Cancelar", null);
         builder.show();
